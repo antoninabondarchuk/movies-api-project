@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+{% for actor in actors %}
+    <br/>
+    id : {{ actor.source_id }}
+    <br/>
+    name: {{ actor.name }}
+    <br/>
+    gender: {{ actor.gender }}
+    <br/>
+    popularity: {{ actor.popularity }}
+    <br/>
+    profile path: {{ actor.profile_path }}
+    <br/>
+    adult: {{ actor.adult }}
+    <br/>
+    {%  if actor.known_for %}
+        {% for film in actor.known_for.all %}
+        {{ film }}
+            <br/>
+        {% endfor %}
+    {% endif %}
+    {%  if actor.known_for_tv %}
+        {% for tv in actor.known_for_tv.all %}
+        {{ tv }}
+            <br/>
+        {% endfor %}
+    {% endif %}
+    {% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if actors.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ actors.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ actors.number }} of {{ actors.paginator.num_pages }}.
+        </span>
+
+        {% if actors.has_next %}
+            <a href="?page={{ actors.next_page_number }}">next</a>
+            <a href="?page={{ actors.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</body>
+</html>
